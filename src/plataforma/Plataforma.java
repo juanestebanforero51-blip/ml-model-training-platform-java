@@ -1,13 +1,12 @@
 package plataforma;
-
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * Plataforma que AGREGA experimentos.
+ * Plataforma principal que agrupa múltiples experimentos mediante una lista dinámica (Agregación).
  */
 public class Plataforma {
-
     private String nombre;
     private ArrayList<Experimento> experimentos;
 
@@ -16,19 +15,26 @@ public class Plataforma {
         this.experimentos = new ArrayList<>();
     }
 
-    /** Agrega un experimento ya existente (agregación). */
-    public void agregarExperimento(Experimento experimento) {
-        // TODO: implementar
+    public void agregarExperimento(Experimento e) {
+        if (e != null && !experimentos.contains(e)) {
+            experimentos.add(e);
+        }
     }
 
-    /**
-     * Reporte: una línea por experimento con su id y el mejor loss de su modelo.
-     */
     public List<String> reporteMejorLoss() {
-        // TODO: implementar
-        return new ArrayList<>();
+        List<String> reporte = new ArrayList<>();
+        for (Experimento e : experimentos) {
+            int mejor = (e.getModelo() != null) ? e.getModelo().mejorLoss() : -1;
+            reporte.add(e.getId() + ": " + mejor);
+        }
+        return reporte;
     }
 
-    public String getNombre() { return nombre; }
-    public ArrayList<Experimento> getExperimentos() { return experimentos; }
+    public String getNombre() {
+        return nombre;
+    }
+
+    public ArrayList<Experimento> getExperimentos() {
+        return experimentos;
+    }
 }
